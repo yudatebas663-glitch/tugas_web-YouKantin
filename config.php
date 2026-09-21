@@ -1,20 +1,18 @@
 <?php
-date_default_timezone_set('Asia/Jakarta');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-$db_host = "192.168.200.100";
-$db_user = "yuda";
-$db_pass = "Siswa#123";
-$db_name = "yuda";
+$host     = "192.168.200.100";
+$username = "yuda";
+$password = "Siswa#123";
+$dbname   = "yuda_youkantin";
 
-$conn = @mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+$conn = mysqli_connect($host, $username, $password, $dbname);
 
 if (!$conn) {
-    die("Koneksi Database Gagal: " . mysqli_connect_error());
+    die("Koneksi ke database gagal: " . mysqli_connect_error());
 }
 
-function getBaseUrl() {
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-    $host = $_SERVER['HTTP_HOST'];
-    return $protocol . "://" . $host . "/YouKantin/";
-}
+mysqli_set_charset($conn, "utf8mb4");
 ?>
