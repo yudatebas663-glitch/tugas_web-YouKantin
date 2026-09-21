@@ -1,278 +1,230 @@
 <?php
 require_once 'config.php';
+
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'pembeli') {
+    header("Location: login.php");
+    exit();
+}
 $menu_gorengan = [
     [
-        "nama" => "Tempe Mendoan",
-        "harga" => 1500,
-        "gambar" => "tempe.jpg",
-        "laris" => true
+        "nama" => "Tempe Mendoan", 
+        "harga" => 1500, 
+        "desc" => "Tempe mendoan hangat khas Jawa Tengah, digoreng setengah matang dengan adonan tepung berbumbu rempah halus dan irisan daun kucai segar. Disajikan pas untuk camilan.",
+        "foto" => "https://cdn0-production-images-kly.akamaized.net/mkUcTt_2tgGWvJ7dG_r0fk0OUDs=/0x188:6000x3570/1200x675/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3526754/original/022519500_1627702430-shutterstock_2012690735.jpg"
     ],
     [
-        "nama" => "Tahu Goreng",
-        "harga" => 1500,
-        "gambar" => "tahu isi.jpg",
-        "laris" => false
+        "nama" => "Tahu Goreng", 
+        "harga" => 1500, 
+        "desc" => "Tahu isi renyah dengan isian tumisan wortel, tauge, dan daun bawang gurih. Digoreng dengan balutan tepung crispy hingga berwarna kuning keemasan.",
+        "foto" => "https://singaporelocalfavourites.com/wp-content/uploads/2017/09/makcik-secret-tahu-goreng-1536x1049.jpg"
     ],
     [
-        "nama" => "Bakwan Sayur",
-        "harga" => 1500,
-        "gambar" => "maxresdefault.jpg",
-        "laris" => true
+        "nama" => "Bakwan Sayur", 
+        "harga" => 1500, 
+        "desc" => "Bakwan sayur garing luar dalam berisi paduan iris wortel, kubis, dan kubis segar bersalut adonan rempah lezat. Paling enak disantap saat istirahat sekolah.",
+        "foto" => "https://images.genpi.co/uploads/arsip/normal/2022/02/01/bakwan-sayur-foto-cookpad-aoeq.jpg"
     ]
 ];
 
 $menu_nasi = [
     [
-        "nama" => "Nasi Goreng",
-        "harga" => 5000,
-        "gambar" => "Nasi-Goreng-telor.jpg",
-        "desc" => "Nasi goreng adalah hidangan nasi yang ditumis dengan bumbu-bumbu, kecap manis, dan aneka isian, menghasilkan cita rasa gurih, sedikit manis, dan beraroma khas"
+        "nama" => "Nasi Goreng", 
+        "harga" => 5000, 
+        "desc" => "Nasi goreng bumbu racikan tradisional khas kantin yang gurih dan harum. Disajikan lengkap dengan telur ceplok/dadar, taburan bawang goreng, dan irisan timun segar.",
+        "foto" => "https://images.deliveryhero.io/image/fd-my/LH/qs1l-hero.jpg"
     ],
     [
-        "nama" => "Nasi Kuning",
-        "harga" => 5000,
-        "gambar" => "pngtree-indonesian-food-yellow-rice-png-image_6657257.jpg",
-        "desc" => "Nasi kuning adalah hidangan nasi khas Indonesia yang dimasak dengan kunyit, santan, dan rempah-rempah, menghasilkan rasa gurih, wangi, dan warna kuning yang khas"
+        "nama" => "Nasi Kuning", 
+        "harga" => 5000, 
+        "desc" => "Nasi kuning harum beraroma santan, serai, dan daun jeruk. Dilengkapi lauk iris telur orek, kering tempe manis gurih, sambal pedas nikmat, serta kerupuk renyah.",
+        "foto" => "https://i1.wp.com/blog.duniamasak.com/wp-content/uploads/nasi-kuning.jpg?fit=900%2C520"
     ],
     [
-        "nama" => "Mie Goreng",
-        "harga" => 5000,
-        "gambar" => "resep-bakmi-goreng-kemiri.jpeg",
-        "desc" => "Mie goreng adalah hidangan mi tumis berumbu gurih-manis yang disajikan dengan aneka isian seperti telur, sayuran, dan daging."
+        "nama" => "Mie Goreng", 
+        "harga" => 5000, 
+        "desc" => "Mie tumis spesial bumbu manis gurih dengan campuran sayuran segar, bakso sapi irisan, dan taburan bawang goreng mekar. Porsi pas penambah energi.",
+        "foto" => "https://media.istockphoto.com/id/1456194878/photo/mie-goreng-udang-or-bakmi-goreng-sea-food-or-fried-noodle-with-sea-food-indonesian-food-and.jpg?s=170667a&w=0&k=20&c=I5Oq-s7SlxXS7kpr6GSU1BXwOP71q32262ZX1VY_WCo="
     ]
 ];
 
 $menu_minuman = [
     [
-        "nama" => "Es Teh",
-        "harga" => 3000,
-        "gambar" => "images.jpg",
-        "desc" => "Es teh adalah minuman seduhan teh dingin yang manis, segar, dan cocok dipadukan dengan makanan apa saja"
+        "nama" => "Es Teh", 
+        "harga" => 3000, 
+        "desc" => "Seduhan teh Melati asli yang diseduh pekat dan manis, disajikan dingin dengan es batu melimpah. Sangat efektif menyegarkan dahaga setelah beraktivitas.",
+        "foto" => "https://asset.kompas.com/crops/VEMd5H4lRZYH6QAc3zr0b003UfU=/0x0:880x587/1200x800/data/photo/2023/08/16/64dc53ca9f3db.jpg"
     ],
     [
-        "nama" => "Es Milo",
-        "harga" => 5000,
-        "gambar" => "fa5d395078f21ce0e38f2bf1269fb5a4.jpg",
-        "desc" => "Es Milo adalah minuman cokelat malt dingin yang manis, gurih, dan menyegarkan"
+        "nama" => "Es Milo", 
+        "harga" => 5000, 
+        "desc" => "Minuman rasa cokelat malt Milo kental dipadu susu manis lezat dan es batu dingin. Memberikan tambahan energi gizi penuh rasa cokelat favorit siswa.",
+        "foto" => "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiS6u_DOM9FDMglxcDJoCcWWWxrI55oaiNurQ1FwgOB7OmGuZuOu7gzCOj3wBSEZEvQNazdyjbQA1cnaAhtO6CLhbxQVnEw27Jw0-JKN5Sh9ejbFL81GCZl_wZ9TyF_POZfPlyxD0LKom0Ip4z7vE1DXUk2_g8RXRrKykPhYoQKjzuitWiHp1Y5dk-5fA/s720/lg_5eb8e07fea50d.jpg"
     ],
     [
-        "nama" => "Es Cincau",
-        "harga" => 3500,
-        "gambar" => "4e270a3bc8f1b014e887baecbc359b17.jpg",
-        "desc" => "Es cincau adalah minuman dingin berisi potongan cincau yang disiram kuah santan atau susu dan gula merah, memberikan sensasi segar, kenyal, dan manis alami"
+        "nama" => "Es Cincau", 
+        "harga" => 3500, 
+        "desc" => "Minuman es cincau hijau/hitam alami dipadu dengan siraman gula merah cair dan santan gurih. Rasanya legit, menyegarkan, dan menyehatkan tubuh.",
+        "foto" => "https://i.pinimg.com/originals/95/34/52/95345216171219e6d3e7cc9deba9f951.jpg"
     ]
 ];
 ?>
 <!DOCTYPE html>
 <html lang="id">
+  <center>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouKantin - Angkringan Digital</title>
-
-  <link rel="stylesheet" href="style.css?v=1.2">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <title>YouKantin - SMKN 1 TEBAS</title>
+  <link rel="stylesheet" href="style.css?v=7.0">
+  <style>
+    .app-container-full {
+      width: 100%;
+      padding: 24px 40px;
+      box-sizing: border-box;
+    }
+    .card-grid-pc {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .card-item-photo {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card-item-photo:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    }
+    .card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+  </style>
 </head>
-<body class="body-index">
+</center>
 
-  <div class="app-container">
-    <header class="hero-card">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
+<center>
+<body>
+
+  <div class="app-container-full">
+    <header class="hero-card" style="display: flex; justify-content: space-between; align-items: center; padding: 28px 36px;">
+      <div>
         <p class="subtitle">SELAMAT DATANG DI</p>
-        <h1 class="brand-title">YouKantin</h1>
-        <p class="tagline">JAJANAN DIGITAL · EST. <?php echo date('Y'); ?></p>
-        <div class="divider">◆ ◆ ◆</div>
-
-        <div class="info-bar">
-          <div class="info-item">
-            <span class="icon">🕒</span>
-            <div class="label">Buka</div>
-            <div class="value">06.00 - 15.00</div>
-          </div>
-          <div class="info-item">
-            <span class="icon">📍</span>
-            <div class="label">Lokasi</div>
-            <div class="value">Kantin SMKN 1 TEBAS</div>
-          </div>
-          <div class="info-item">
-            <span class="icon">🪑</span>
-            <div class="label">Meja</div>
-            <div class="value">15 tersedia</div>
-          </div>
-        </div>
+        <h1 class="brand-title" style="font-size: 32px;">YouKantin</h1>
+        <p class="tagline">KANTIN DIGITAL LOGISTIK & PEMESANAN · SMKN 1 TEBAS</p>
+      </div>
+      <div style="text-align: right; background: rgba(255,255,255,0.12); padding: 14px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);">
+        <p style="font-size: 14px; margin-bottom: 6px; color: #f8fafc;">Pembeli: <strong><?php echo htmlspecialchars($_SESSION['nama_lengkap'] ?? $_SESSION['username']); ?></strong></p>
+        <a href="logout.php" class="btn-logout-head">Keluar (Logout)</a>
       </div>
     </header>
 
-    <nav class="category-tabs">
-      <button class="tab-btn active" data-category="all">🛍️ Semua</button>
-      <button class="tab-btn" data-category="gorengan">🍿 Gorengan</button>
-      <button class="tab-btn" data-category="nasi">🍙 Nasi & Mie</button>
-      <button class="tab-btn" data-category="minuman">🥤 Minuman</button>
-    </nav>
-
-    <main id="menu-container">
-      
-      <section class="menu-section" id="section-gorengan">
-        <div class="section-header">
-          <h2>🍿 GORENGAN</h2>
-          <a href="#" class="see-all">lihat semua ➔</a>
-        </div>
-        <div class="horizontal-scroll">
-          <div class="card-grid-horizontal">
-            <?php foreach ($menu_gorengan as $item): ?>
-              <div class="card-item card-vertical">
-                <div class="img-wrapper">
-                  <img src="<?php echo $item['gambar']; ?>" alt="<?php echo $item['nama']; ?>">
-                  <?php if ($item['laris']): ?>
-                    <span class="badge-laris">🔥 LARIS</span>
-                  <?php endif; ?>
-                </div>
-                <div class="card-body">
-                  <h3><?php echo $item['nama']; ?></h3>
-                  <div class="card-footer">
-                    <span class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></span>
-                    <button class="btn-add" onclick="addToCart('<?php echo htmlspecialchars($item['nama'], ENT_QUOTES); ?>', <?php echo $item['harga']; ?>)">+</button>
-                  </div>
-                </div>
+    <main>
+      <h2 class="section-title">🍿 GORENGAN</h2>
+      <div class="card-grid-pc">
+        <?php foreach ($menu_gorengan as$item): ?>
+          <div class="card-item-photo">
+            <img src="<?php echo $item['foto']; ?>" alt="<?php echo $item['nama']; ?>" class="card-img">
+            <div class="card-body">
+              <div>
+                <h3 style="font-size: 18px; color: #0f172a; margin-bottom: 6px;"><?php echo $item['nama']; ?></h3>
+                <p style="font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 12px;"><?php echo $item['desc']; ?></p>
               </div>
-            <?php endforeach; ?>
+              <div>
+                <p class="price" style="font-size: 16px; font-weight: 700; color: #2563eb; margin-bottom: 10px;">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
+                <button class="btn-add" onclick="addToCart('<?php echo htmlspecialchars($item['nama'], ENT_QUOTES); ?>', <?php echo$item['harga']; ?>)">+ Tambah Pesanan</button>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        <?php endforeach; ?>
+      </div>
 
-      <section class="menu-section" id="section-nasi">
-        <div class="section-header">
-          <h2>🍙 NASI & MIE</h2>
-          <a href="#" class="see-all">lihat semua ➔</a>
-        </div>
-        <div class="card-list-vertical">
-          <?php foreach ($menu_nasi as $item): ?>
-            <div class="card-item card-horizontal">
-              <img src="<?php echo $item['gambar']; ?>" alt="<?php echo $item['nama']; ?>">
-              <div class="card-info">
-                <h3><?php echo $item['nama']; ?></h3>
-                <p class="desc"><?php echo $item['desc']; ?></p>
-                <span class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?> <small>/ bungkus</small></span>
+      <h2 class="section-title" style="margin-top: 36px;">🍙 NASI & MIE</h2>
+      <div class="card-grid-pc">
+        <?php foreach ($menu_nasi as$item): ?>
+          <div class="card-item-photo">
+            <img src="<?php echo $item['foto']; ?>" alt="<?php echo $item['nama']; ?>" class="card-img">
+            <div class="card-body">
+              <div>
+                <h3 style="font-size: 18px; color: #0f172a; margin-bottom: 6px;"><?php echo $item['nama']; ?></h3>
+                <p style="font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 12px;"><?php echo $item['desc']; ?></p>
               </div>
-              <button class="btn-add" onclick="addToCart('<?php echo htmlspecialchars($item['nama'], ENT_QUOTES); ?>', <?php echo $item['harga']; ?>)">+</button>
-            </div>
-          <?php endforeach; ?>
-        </div>
-      </section>
-
-      <section class="menu-section" id="section-minuman">
-        <div class="section-header">
-          <h2>🥤 MINUMAN</h2>
-          <a href="#" class="see-all">lihat semua ➔</a>
-        </div>
-        <div class="card-list-vertical">
-          <?php foreach ($menu_minuman as $item): ?>
-            <div class="card-item card-horizontal">
-              <img src="<?php echo $item['gambar']; ?>" alt="<?php echo $item['nama']; ?>">
-              <div class="card-info">
-                <h3><?php echo $item['nama']; ?></h3>
-                <p class="desc"><?php echo $item['desc']; ?></p>
-                <span class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></span>
+              <div>
+                <p class="price" style="font-size: 16px; font-weight: 700; color: #2563eb; margin-bottom: 10px;">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
+                <button class="btn-add" onclick="addToCart('<?php echo htmlspecialchars($item['nama'], ENT_QUOTES); ?>', <?php echo$item['harga']; ?>)">+ Tambah Pesanan</button>
               </div>
-              <button class="btn-add" onclick="addToCart('<?php echo htmlspecialchars($item['nama'], ENT_QUOTES); ?>', <?php echo $item['harga']; ?>)">+</button>
             </div>
-          <?php endforeach; ?>
-        </div>
-      </section>
+          </div>
+        <?php endforeach; ?>
+      </div>
 
+      <h2 class="section-title" style="margin-top: 36px;">🥤 MINUMAN</h2>
+      <div class="card-grid-pc">
+        <?php foreach ($menu_minuman as$item): ?>
+          <div class="card-item-photo">
+            <img src="<?php echo $item['foto']; ?>" alt="<?php echo $item['nama']; ?>" class="card-img">
+            <div class="card-body">
+              <div>
+                <h3 style="font-size: 18px; color: #0f172a; margin-bottom: 6px;"><?php echo $item['nama']; ?></h3>
+                <p style="font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 12px;"><?php echo $item['desc']; ?></p>
+              </div>
+              <div>
+                <p class="price" style="font-size: 16px; font-weight: 700; color: #2563eb; margin-bottom: 10px;">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
+                <button class="btn-add" onclick="addToCart('<?php echo htmlspecialchars($item['nama'], ENT_QUOTES); ?>', <?php echo$item['harga']; ?>)">+ Tambah Pesanan</button>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </main>
   </div>
 
-  <div class="cart-bar-floating">
-    <div class="cart-info">
-      <small>Total Belanjaan:</small>
-      <div id="cart-summary" class="cart-info-text">0 Menu (0 Item)</div>
-    </div>
-    
-    <form action="nota.php" method="POST">
+  <div class="cart-bar-floating" style="padding: 16px 40px;">
+    <div class="cart-info-text" id="cart-summary" style="font-size: 16px;">0 Item dimasukkan ke keranjang</div>
+    <form action="proses_bayar.php" method="POST">
       <input type="hidden" name="cart_data" id="cart_data_input">
-      <button type="submit" id="btn-checkout" class="btn-checkout" disabled>Lihat Nota ➔</button>
+      <button type="submit" id="btn-checkout" class="btn-checkout" style="padding: 12px 30px; font-size: 15px;" disabled>Lihat Nota Pesanan ➔</button>
     </form>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const tabButtons = document.querySelectorAll(".tab-btn");
-      const sections = {
-        gorengan: document.getElementById("section-gorengan"),
-        nasi: document.getElementById("section-nasi"),
-        minuman: document.getElementById("section-minuman")
-      };
-
-      tabButtons.forEach(button => {
-        button.addEventListener("click", function() {
-          tabButtons.forEach(btn => btn.classList.remove("active"));
-          this.classList.add("active");
-
-          const category = this.getAttribute("data-category");
-
-          if (category === "all") {
-            Object.values(sections).forEach(sec => {
-              if (sec) sec.style.display = "block";
-            });
-          } else {
-            Object.values(sections).forEach(sec => {
-              if (sec) sec.style.display = "none";
-            });
-            if (sections[category]) {
-              sections[category].style.display = "block";
-            }
-          }
-        });
-      });
-    });
-
-    let cart = [];
-
-    try {
-      const storedCart = JSON.parse(localStorage.getItem('youkantin_cart'));
-      if (Array.isArray(storedCart)) {
-        cart = storedCart.filter(item =>
-          item && typeof item.title === 'string' &&
-          Number.isFinite(Number(item.price)) && Number(item.qty) > 0
-        ).map(item => ({
-          title: item.title,
-          price: Number(item.price),
-          qty: Math.floor(Number(item.qty))
-        }));
-      }
-    } catch (error) {
-      localStorage.removeItem('youkantin_cart');
-    }
+    let cart = JSON.parse(localStorage.getItem('youkantin_cart')) || [];
 
     function addToCart(title, price) {
-      const existingIndex = cart.findIndex(item => item.title === title);
-
-      if (existingIndex > -1) {
-        cart[existingIndex].qty += 1;
+      const existing = cart.find(item => item.title === title);
+      if (existing) {
+        existing.qty += 1;
       } else {
-        cart.push({ title: title, price: price, qty: 1 });
+        cart.push({ title, price, qty: 1 });
       }
-
-      saveAndUpdateUI();
+      saveAndUpdate();
     }
 
-    function saveAndUpdateUI() {
+    function saveAndUpdate() {
       localStorage.setItem('youkantin_cart', JSON.stringify(cart));
-      
-      const totalJenisMenu = cart.length;
-      const totalQtyItem = cart.reduce((sum, item) => sum + item.qty, 0);
-      
-      document.getElementById('cart-summary').innerText = `${totalJenisMenu} Menu (${totalQtyItem} Item)`;
-      
-      const checkoutBtn = document.getElementById('btn-checkout');
-      checkoutBtn.disabled = cart.length === 0;
-
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-summary').innerText = `${totalQty} Item dimasukkan ke keranjang`;
+      document.getElementById('btn-checkout').disabled = cart.length === 0;
       document.getElementById('cart_data_input').value = JSON.stringify(cart);
     }
 
-    saveAndUpdateUI();
+    saveAndUpdate();
   </script>
 </body>
+        </center>
 </html>
+
